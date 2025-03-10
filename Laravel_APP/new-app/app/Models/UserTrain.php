@@ -9,8 +9,4 @@ use Laravel\Sanctum\HasApiTokens;
 class UserTrain extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable;
-
-    protected $fillable = ['name', 'email', 'password'];
-
-    protected $hidden = ['password'];
 }

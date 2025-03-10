@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\UserTrain;
+use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 class UserController extends Controller
 {
@@ -14,7 +14,7 @@ class UserController extends Controller
        'password' =>'required|string|min:6'
     ]);
 
-    $user  = UserTrain::create([
+    $user  = User::create([
       'name'=> $request->name,
       'email' =>$request->email,
       'password' =>bcrypt($request->password)
