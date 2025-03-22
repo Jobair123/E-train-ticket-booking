@@ -20,7 +20,11 @@ class UserController extends Controller
       'password' =>bcrypt($request->password)
       
     ]);
-    return response()->json(['message' => 'User registered successfully']);
+    // Create a Sanctum token for the user
+    $token = $user->createToken('auth_token')->plainTextToken;
+
+    return response()->json(['message' => 'User registered successfully' ,'token' => $token]);
+
    }
    public function login(Request $request)
 {
@@ -30,13 +34,24 @@ class UserController extends Controller
     ]);
 
     $credentials = $request->only('email', 'password');
-
     if (Auth::attempt($credentials)) {
-        return response()->json(['message' => "Login Successfully"], 200);
+      
+      $user = Auth::user();
+      // Create a Sanctum token for the authenticated user
+      $token = $user->createToken('auth_token')->plainTextToken;
+
+        return response()->json(['message' => "Login Successfully",'token'=>$token], 200);
     }
 
     return response()->json(['message' => "Login failed"], 401);
 }
 
+
+public function logout(Request $request){
+  // Revoke the authenticated user's token
+$request->user()->currentAccessToken()->delete();
+
+  return response()->json(['message' => "Logout successfully"], 200);
+}
 
 }

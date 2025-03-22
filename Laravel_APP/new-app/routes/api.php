@@ -15,11 +15,15 @@ use App\Http\Controllers\TrainController;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
-});
+
 
 
 Route::post('/register',[UserController::class,'Register']);
 Route::post('/login',[UserController::class,'Login']);
-Route::get('/search',[TrainController::class,'Search']);
+// Protected routes
+Route::middleware('auth:sanctum')->group(function () {
+    
+    Route::post('/logout', [UserController::class, 'Logout']);
+});
+
+Route::get('/search', [TrainController::class, 'Search']);

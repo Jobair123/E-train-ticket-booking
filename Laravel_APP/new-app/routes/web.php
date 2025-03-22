@@ -37,3 +37,4 @@ Route::controller(UserController::class)->group(function(){
 });
 
 Route::resource('books',BookController::class);
+Route::post('/login',[UserController::class,'Login']);
